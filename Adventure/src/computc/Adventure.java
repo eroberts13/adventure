@@ -7,10 +7,12 @@ import java.util.ArrayList;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.BasicGame;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.Sound;
 import org.newdawn.slick.tiled.TiledMap;
 
 public class Adventure extends BasicGame
@@ -27,7 +29,6 @@ public class Adventure extends BasicGame
 	
 	public void init(GameContainer container) throws SlickException
 	{
-		
 				reset();
 	}
 	
@@ -131,6 +132,14 @@ public class Adventure extends BasicGame
 		
 		if(flightPath <= -33 * 64)
 		{
+			if(shouldWePaintItRed())
+			{
+				graphics.setColor(Color.red);
+			}
+			else
+			{
+				graphics.setColor(Color.white);
+			}
 			graphics.drawString("Joo Win!!! Press R to play again!!!!!!!!111!`", 50, 50);
 		}
 		
@@ -155,27 +164,28 @@ public class Adventure extends BasicGame
 		{
 			planetx = new TiledMap("./res/PlanetX.tmx");
 			arwing = new Starship(10, 20);
+			for(int tx = 0; tx < planetx.getWidth(); tx++)
+			{
+				for(int ty = 0; ty < 7; ty++)
+				{
+					if(planetx.getTileId(tx, ty, 0) == 3)
+					{
+						asteroids.add(new Terrain(tx, ty));
+					}
+					if(planetx.getTileId(tx, ty, 1) == 4)
+					{
+						asteroids.add(new Asteroid(tx, ty));
+					}
+					
+				}
+			}
 		}
 		catch(Exception exception)
 		{
 			//Meh.
 		}
 		
-		for(int tx = 0; tx < planetx.getWidth(); tx++)
-		{
-			for(int ty = 0; ty < 7; ty++)
-			{
-				if(planetx.getTileId(tx, ty, 0) == 3)
-				{
-					asteroids.add(new Terrain(tx, ty));
-				}
-				if(planetx.getTileId(tx, ty, 1) == 4)
-				{
-					asteroids.add(new Asteroid(tx, ty));
-				}
-				
-			}
-		}
+		
 	}
 	
 	public static void main(String[] args)
@@ -190,6 +200,19 @@ public class Adventure extends BasicGame
 		{
 			System.out.println(error.getMessage());
 		}
+	}
+	
+	public boolean shouldWePaintItRed()
+	{
+		for(Laser laser : lasers)
+		{
+			if(!laser.offScreen)
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public static final int SCREEN_WIDTH = 11;
