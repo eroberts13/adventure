@@ -18,6 +18,15 @@ public class Laser
 		this.x = x;
 		this.y = y;
 	}
+	
+	public void update(int delta)
+	{
+		this.x += 2 * delta;
+		if(this.x > Adventure.WIDTH)
+		{
+			this.offScreen = true;
+		}
+	}
 	public void render(Graphics graphics)
 	{
 		graphics.setColor(Color.red);

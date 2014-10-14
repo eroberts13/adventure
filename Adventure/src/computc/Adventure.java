@@ -39,28 +39,28 @@ public class Adventure extends BasicGame
 		{
 			if(arwing.x > 0)
 			{	
-				arwing.x -= 1f;
+				arwing.x -= 0.25f * delta;
 			}
 		}
 		if(myinput.isKeyDown(Input.KEY_RIGHT))
 		{
 			if(arwing.x + arwing.width < WIDTH)
 			{	
-				arwing.x += 1f;
+				arwing.x += 0.25f * delta;
 			}
 		}
 		if(myinput.isKeyDown(Input.KEY_UP))
 		{
 			if(arwing.y > 0)
 			{
-				arwing.y -= 1f;
+				arwing.y -= 0.25f * delta;
 			}
 		}
 		if(myinput.isKeyDown(Input.KEY_DOWN))
 		{
 			if(arwing.y + arwing.height < HEIGHT)
 			{
-				arwing.y += 1f;
+				arwing.y += 0.25f * delta;
 			}
 		}
 		for(Asteroid asteroid : asteroids)
@@ -93,7 +93,7 @@ public class Adventure extends BasicGame
 				}
 			}
 		}
-		flightPath -= 1f;
+		flightPath -= 0.25f * delta;
 		
 		if(flightPath <= -33 * 64)
 		{
@@ -106,18 +106,14 @@ public class Adventure extends BasicGame
 		{
 			if(arwing.laserCoolDown <= 0)
 			{
-				lasers.add(new Laser(arwing.x + arwing.width, arwing.y + (arwing.height/2)));
+				lasers.add(new Laser(arwing.x + (arwing.width/2), arwing.y + (arwing.height/2)));
 				arwing.laserCoolDown = 50;
 			}
 		}
-		arwing.laserCoolDown -=1;
+		arwing.laserCoolDown -=1 * delta;
 		for(Laser laser : lasers)
 		{
-			laser.x += 2;
-			if(laser.x > WIDTH)
-			{
-				laser.offScreen = true;
-			}
+			laser.update(delta);
 		}  
 	}
 	
@@ -150,7 +146,7 @@ public class Adventure extends BasicGame
 	
 	public void reset()
 	{
-		arwing = new Starship(10, 20);
+		
 		flightPath = 0;
 		asteroids = new ArrayList<Asteroid>();
 		lasers = new ArrayList<Laser>();
@@ -158,6 +154,7 @@ public class Adventure extends BasicGame
 		try
 		{
 			planetx = new TiledMap("./res/PlanetX.tmx");
+			arwing = new Starship(10, 20);
 		}
 		catch(Exception exception)
 		{
