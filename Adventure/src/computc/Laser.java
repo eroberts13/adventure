@@ -22,6 +22,7 @@ public class Laser
 		this.y = y;
 		try {
 			this.sound = new Sound("./res/PEWPEW.wav");
+			System.out.println(this.sound);
 			this.sound.play();
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block

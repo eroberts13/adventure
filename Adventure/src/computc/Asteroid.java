@@ -23,7 +23,7 @@ public class Asteroid
 		this.y = y;
 		
 			this.image = new Image("./res/Asteroid.png");
-			System.out.println(this.image);
+			
 		
 	}
 	
