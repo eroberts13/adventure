@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Sound;
 
@@ -15,14 +16,18 @@ public class Laser
 	public float height = 10f;
 	public boolean offScreen = false;
 	public Sound sound;
+	public Image image;
 	
-	public Laser(float x, float y)
+	public Laser(float x, float y) throws SlickException
 	{
 		this.x = x;
 		this.y = y;
+		
+		this.image = new Image("./res/laser.png");
+		
 		try {
 			this.sound = new Sound("./res/PEWPEW.wav");
-			System.out.println(this.sound);
+			
 			this.sound.play();
 		} catch (SlickException e) {
 			// TODO Auto-generated catch block
@@ -40,8 +45,7 @@ public class Laser
 	}
 	public void render(Graphics graphics)
 	{
-		graphics.setColor(Color.red);
-		graphics.fillRect(this.x, this.y, this.width, this.height);
+		this.image.draw(this.x, this.y);
 	}
 	public Rectangle getRect()
 	{

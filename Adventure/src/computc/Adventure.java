@@ -22,6 +22,7 @@ public class Adventure extends BasicGame
 	public TiledMap planetx;
 	public ArrayList<Asteroid> asteroids; 
 	public ArrayList<Laser> lasers;
+	private Mountain mountain;
 	public Adventure()
 	{
 		super("We don't have a name yet.");
@@ -120,7 +121,9 @@ public class Adventure extends BasicGame
 	
 	public void render(GameContainer container, Graphics graphics) throws SlickException
 	{
+		
 		planetx.render(flightPath, 0, 0);
+		mountain.render(graphics, flightPath);
 		arwing.render(graphics);
 		for(Laser laser : lasers)
 		{
@@ -179,6 +182,7 @@ public class Adventure extends BasicGame
 					
 				}
 			}
+			mountain = new Mountain(352, 224-64, 2);
 		}
 		catch(Exception exception)
 		{
